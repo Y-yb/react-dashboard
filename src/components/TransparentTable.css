@@ -1,0 +1,22 @@
+
+.transparent-table .ant-table-content {
+  background-color: transparent !important;
+}
+
+.transparent-table .ant-table-content {
+  background-color: transparent !important;
+}
+
+.transparent-table .ant-table-thead  > tr > th {
+  background-color: transparent !important;
+}
+
+
+.transparent-table .ant-table {
+  background-color: transparent !important;
+}
+
+.transparent-table .ant-table-cell[rowspan="2"]  {
+  height: 100%;
+  vertical-align: top !important;
+}
