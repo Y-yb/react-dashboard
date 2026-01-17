@@ -3,6 +3,10 @@ import { Table } from "antd";
 import type { ColumnType } from "antd/es/table";
 import "antd/dist/reset.css";
 import "./TransparentTable.css";
+import HoverTooltip, { DetailCard, type DetailInfo } from "./HoverTooltip";
+import LayoutGridWidget from "./LayoutGridWidget";
+import ValueWithTarget from "./ValueWithTarget";
+
 // 定义表格数据类型
 interface YieldCell {
   value: string;
@@ -112,54 +116,78 @@ const YieldAntTable: React.FC<YieldAntTableProps> = ({
       key: "col0",
       minWidth: 10,
       align: "left" as const,
-      render: (value: YieldCell) => (
-        <div style={{ textAlign: "left", padding: "1px 0" }}>
-          <div
-            style={{
-              fontSize: "0.9rem",
-              fontWeight: "bold",
-              color: value.color || defaultTextColor,
-            }}
-          >
-            {value.value}
-          </div>
-          <div
-            style={{
-              fontSize: "0.75rem",
-              color: value.color || defaultTargetColor,
-            }}
-          >
-            Target:{value.target}
-          </div>
-        </div>
-      ),
+      render: (value: YieldCell, record: any) => {
+        // 创建hover提示的详细信息
+        const detailInfos: DetailInfo[] = [
+          { label: 'projects', value: record.name },
+          { label: 'cum_actual', value: record.name === 'V53' ? '30,600.4K' : 
+                                      record.name === 'V54' ? '28,450.2K' : '25,320.8K' },
+          { label: 'cum_plan', value: record.name === 'V53' ? '30,359.0K' : 
+                                     record.name === 'V54' ? '28,000.0K' : '25,500.0K' },
+          {
+            label: 'Output Result', 
+            value: record.name === 'V53' ? 'Great!' : 
+                   record.name === 'V54' ? 'Good!' : 'Fair!',
+            highlight: true
+          },
+        ];
+        
+        // 创建hover提示内容
+        const tooltipContent = <DetailCard infos={detailInfos} title="Production Details" />;
+        
+        return (
+          <HoverTooltip content={tooltipContent}>
+            <ValueWithTarget
+              value={value.value}
+              target={value.target}
+              valueColor={value.color}
+              targetColor={value.color}
+              defaultTextColor={defaultTextColor}
+              defaultTargetColor={defaultTargetColor}
+              textAlign="left"
+            />
+          </HoverTooltip>
+        );
+      },
     },
     {
       title: "BGA/Chassis",
       dataIndex: "col1",
       key: "col1",
       align: "center" as const,
-      render: (value: YieldCell) => (
-        <div style={{ textAlign: "center", padding: "1px 0" }}>
-          <div
-            style={{
-              fontSize: "0.9rem",
-              fontWeight: "bold",
-              color: value.color || defaultTextColor,
-            }}
-          >
-            {value.value}
-          </div>
-          <div
-            style={{
-              fontSize: "0.75rem",
-              color: value.color || defaultTargetColor,
-            }}
-          >
-            Target:{value.target}
-          </div>
-        </div>
-      ),
+      render: (value: YieldCell, record: any) => {
+        // 创建hover提示的详细信息
+        const detailInfos: DetailInfo[] = [
+          { label: 'projects', value: record.name },
+          { label: 'cum_actual', value: record.name === 'V53' ? '30,600.4K' : 
+                                      record.name === 'V54' ? '28,450.2K' : '25,320.8K' },
+          { label: 'cum_plan', value: record.name === 'V53' ? '30,359.0K' : 
+                                     record.name === 'V54' ? '28,000.0K' : '25,500.0K' },
+          {
+            label: 'Output Result', 
+            value: record.name === 'V53' ? 'Great!' : 
+                   record.name === 'V54' ? 'Good!' : 'Fair!',
+            highlight: true
+          },
+        ];
+        
+        // 创建hover提示内容
+        const tooltipContent = <DetailCard infos={detailInfos} title="Production Details" />;
+        
+        return (
+          <HoverTooltip content={tooltipContent}>
+            <ValueWithTarget
+              value={value.value}
+              target={value.target}
+              valueColor={value.color}
+              targetColor={value.color}
+              defaultTextColor={defaultTextColor}
+              defaultTargetColor={defaultTargetColor}
+              textAlign="center"
+            />
+          </HoverTooltip>
+        );
+      },
     },
   ];
 
@@ -181,77 +209,37 @@ const YieldAntTable: React.FC<YieldAntTableProps> = ({
     },
   };
 
-  return (
-    <div
+  // 创建表格组件
+  const tableComponent = (
+    <Table
+      styles={styleProps}
+      columns={tableColumns}
+      dataSource={tableData}
+      pagination={false}
+      scroll={{}}
+      bordered={false}
+      size="large"
+      className="transparent-table"
       style={{
-        width,
-        height,
-        backgroundColor: backgroundColor,
-        padding: "1rem",
-        borderRadius: "0.5rem",
-        boxSizing: "border-box",
-        display: "flex",
-        flexDirection: "column",
+        height: "100%",
+        border: "none",
+        backgroundColor: "transparent",
       }}
-    >
-      {/* 标题区域 */}
-      <div
-        style={{
-          textAlign: "left",
-          marginBottom: "0.5rem",
-        }}
-      >
-        <h2
-          style={{
-            fontSize: "1.25rem",
-            fontWeight: "bold",
-            color: titleColor,
-            margin: 0,
-            display: "inline-block",
-          }}
-        >
-          {title}
-        </h2>
-        {subtitle && (
-          <span
-            style={{
-              fontSize: "1rem",
-              fontWeight: "normal",
-              color: titleColor,
-              marginLeft: "0.5rem",
-            }}
-          >
-            {subtitle}
-          </span>
-        )}
-      </div>
+      rowHoverable={false}
+    />
+  );
 
-      {/* 表格区域 */}
-      <div
-        style={{
-          flex: 1,
-          overflow: "hidden",
-        }}
-      >
-        <Table
-          styles={styleProps}
-          columns={tableColumns}
-          dataSource={tableData}
-          pagination={false}
-          scroll={{}}
-          bordered={false}
-          size="large"
-          className="transparent-table" // 添加透明类名
-          style={{
-            height: "100%",
-            border: "none", // 确保表格无边框
-            backgroundColor: "transparent", // 确保表格背景透明
-          }}
-          rowHoverable={false}
-          tableLayout="auto"
-        />
-      </div>
-    </div>
+  // 使用LayoutGridWidget包装表格组件
+  return (
+    <LayoutGridWidget
+      title={title}
+      subtitle={subtitle}
+      backgroundColor={backgroundColor || "rgb(225,247,238)"}
+      width={width}
+      height={height}
+    >
+      {tableComponent}
+    </LayoutGridWidget>
   );
 };
 

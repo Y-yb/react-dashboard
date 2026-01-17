@@ -2,6 +2,7 @@ import React from "react";
 import { Table } from "antd";
 import type { ColumnType } from "antd/es/table";
 import "./TransparentTable.css";
+import HoverTooltip from "./HoverTooltip";
 
 // 定义子列数据类型
 interface UnknownSubColumnValue {
@@ -78,11 +79,13 @@ const UnknownTable: React.FC<UnknownTableProps> = ({
           key: `group${groupIndex}`,
           align: "center" as const,
           render: (value: UnknownSubColumnValue) => (
-            <div style={{ textAlign: "center", padding: "0.5rem 0" }}>
-              <span style={{ fontSize: "1rem", color: textColor }}>
-                {value.value}
-              </span>
-            </div>
+            <HoverTooltip>
+              <div style={{ textAlign: "center", padding: "0.5rem 0" }}>
+                <span style={{ fontSize: "1rem", color: textColor }}>
+                  {value.value}
+                </span>
+              </div>
+            </HoverTooltip>
           ),
         };
       }
@@ -104,11 +107,13 @@ const UnknownTable: React.FC<UnknownTableProps> = ({
             key: `col${actualColumnIndex}`,
             align: "center" as const,
             render: (value: UnknownSubColumnValue) => (
-              <div style={{ textAlign: "center", padding: "0.5rem 0" }}>
-                <span style={{ fontSize: "0.8rem", color: textColor }}>
-                  {value.value}
-                </span>
-              </div>
+              <HoverTooltip>
+                <div style={{ textAlign: "center", padding: "0.5rem 0" }}>
+                  <span style={{ fontSize: "0.8rem", color: textColor }}>
+                    {value.value}
+                  </span>
+                </div>
+              </HoverTooltip>
             ),
           };
         }),

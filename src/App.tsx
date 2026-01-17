@@ -1,4 +1,5 @@
 import "./index.css";
+import { Tooltip } from "antd";
 import SideNav from "./components/SideNav";
 import YieldAntTable from "./components/YieldAntTable";
 import UnknownTable from "./components/UnknownTable";
@@ -6,6 +7,7 @@ import SupplyPipeline from "./components/SupplyPipeline";
 import FPYTable from "./components/FPYTable";
 
 function App() {
+
   // YieldTable示例数据
   const yieldColumns = [{ title: "MCH/HSG" }, { title: "BGA/Chassis" }];
 
@@ -531,6 +533,7 @@ function App() {
       <SideNav />
       {/* 主内容区 */}
       <div className="flex-1 p-6 overflow-auto">
+        
         <h1 className="text-2xl font-bold mb-6">Web Design Draft</h1>
         <div className=" w-[900px] flex justify-between">
           {/* Yield Ant Design Table示例 */}

@@ -1,6 +1,7 @@
 import React from "react";
 import { Table } from "antd";
 import type { ColumnType } from "antd/es/table";
+import HoverTooltip from "./HoverTooltip";
 
 // 定义每日数据结构
 interface DailyData {
@@ -66,12 +67,14 @@ const FPYTable: React.FC<FPYTableProps> = ({ title, projects, dates }) => {
   const renderDailyData = (dailyData: DailyData) => {
     const { value, trend, color } = dailyData;
     return (
-      <div style={{ 
-        color: color === "green" ? "#4CAF50" : "#FF9800",
-        fontWeight: "bold"
-      }}>
-        {value} {renderTrendIcon(trend)}
-      </div>
+      <HoverTooltip>
+        <div style={{ 
+          color: color === "green" ? "#4CAF50" : "#FF9800",
+          fontWeight: "bold"
+        }}>
+          {value} {renderTrendIcon(trend)}
+        </div>
+      </HoverTooltip>
     );
   };
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { Table } from "antd";
 import type { ColumnType } from "antd/es/table";
+import HoverTooltip from "./HoverTooltip";
 
 // 定义数据结构
 interface SupplyData {
@@ -115,15 +116,17 @@ const SupplyPipeline: React.FC<SupplyPipelineProps> = ({
       width: 200,
       render: (value, record) => {
         return (
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <div style={{ paddingRight: "0.5rem", width: "80px" }}>
-              {record.shipFormatted}
+          <HoverTooltip>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <div style={{ paddingRight: "0.5rem", width: "80px" }}>
+                {record.shipFormatted}
+              </div>
+              <div style={{ position: "relative", flex: 1, height: "1rem" }}>
+                <div style={getBarStyle(value, record.color || "#91cc75")} />
+                <div style={getTargetLineStyle(record.shipTarget)} />
+              </div>
             </div>
-            <div style={{ position: "relative", flex: 1, height: "1rem" }}>
-              <div style={getBarStyle(value, record.color || "#91cc75")} />
-              <div style={getTargetLineStyle(record.shipTarget)} />
-            </div>
-          </div>
+          </HoverTooltip>
         );
       },
     },
@@ -134,21 +137,23 @@ const SupplyPipeline: React.FC<SupplyPipelineProps> = ({
       align: "left" as const,
       width: 200,
       render: (value, record) => (
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <div
-            style={{
-              paddingRight: "0.5rem",
-              width: "80px",
-              color: record.color || "#91cc75",
-            }}
-          >
-            {record.oqcPackFormatted}
+        <HoverTooltip>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <div
+              style={{
+                paddingRight: "0.5rem",
+                width: "80px",
+                color: record.color || "#91cc75",
+              }}
+            >
+              {record.oqcPackFormatted}
+            </div>
+            <div style={{ position: "relative", flex: 1, height: "1rem" }}>
+              <div style={getBarStyle(value, record.color || "#91cc75")} />
+              <div style={getTargetLineStyle(record.oqcPackTarget)} />
+            </div>
           </div>
-          <div style={{ position: "relative", flex: 1, height: "1rem" }}>
-            <div style={getBarStyle(value, record.color || "#91cc75")} />
-            <div style={getTargetLineStyle(record.oqcPackTarget)} />
-          </div>
-        </div>
+        </HoverTooltip>
       ),
     },
     {
@@ -158,15 +163,17 @@ const SupplyPipeline: React.FC<SupplyPipelineProps> = ({
       align: "left" as const,
       width: 200,
       render: (value, record) => (
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <div style={{ paddingRight: "0.5rem", width: "80px" }}>
-            {record.oqcFormatted}
+        <HoverTooltip>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <div style={{ paddingRight: "0.5rem", width: "80px" }}>
+              {record.oqcFormatted}
+            </div>
+            <div style={{ position: "relative", flex: 1, height: "1rem" }}>
+              <div style={getBarStyle(value, record.color || "#91cc75")} />
+              <div style={getTargetLineStyle(record.oqcTarget)} />
+            </div>
           </div>
-          <div style={{ position: "relative", flex: 1, height: "1rem" }}>
-            <div style={getBarStyle(value, record.color || "#91cc75")} />
-            <div style={getTargetLineStyle(record.oqcTarget)} />
-          </div>
-        </div>
+        </HoverTooltip>
       ),
     },
   ];
